@@ -12,16 +12,16 @@ import pandas as pd
 from datetime import datetime
 from loguru import logger
 
-logger.info(f"logger.info(): Hello world, the app is loaded'")
+logger.info(f"Hello world, the app is loaded'")
 
 # use a random number to identify a user's unique session
 session_id = (random.randrange(1,100000))
 
-logger.info(f"logger.info(): Beginning data download'")
+logger.info(f"Beginning data download'")
 start = datetime.now()
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder_unfiltered.csv')
 end = datetime.now()
-logger.info(f"logger.info(): Data download complete. Took '{end-start}'")
+logger.info(f"Data download complete. Took '{end-start}'")
 
 app = Dash(__name__)
 
@@ -56,13 +56,9 @@ def update_graph(value):
     # identify pid
     pid = os.getpid()
 
-    # You should not use `print` for logging. `print` statements will not show up 
-    # in the logs immediatly.
-    print(f"print(): The plot is being updated with '{value}' for user '{username}' on pid '{pid}' with session id '{session_id}'")
-
     # You should use a tool purpose built for logging, like the built in logging
     # library, or my preferred option `loguru`.
-    logger.info(f"logger.info(): The plot is being updated with '{value}' for user '{username}' on pid '{pid}' with session id '{session_id}'")
+    logger.info(f"The plot is being updated with '{value}' for user '{username}' on pid '{pid}' with session id '{session_id}'")
     
     dff = df[df.country==value]
     return px.line(dff, x='year', y='pop')
